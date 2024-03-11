@@ -15,7 +15,7 @@ export default function Films() {
 
   useEffect(() => {
     fetchFilms();
-  }, [])
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <>

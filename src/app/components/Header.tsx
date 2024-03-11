@@ -36,7 +36,7 @@ export const Header = () => {
               href='/films'
               className={cn(
                 'block text-white hover:scale-110 transition-transform duration-300',
-                { 'text-black': path === '/films' }
+                { 'text-black': path === '/heroes' }
               )}
             >
               Films
@@ -47,7 +47,7 @@ export const Header = () => {
               href='/starships'
               className={cn(
                 'block text-white hover:scale-110 transition-transform duration-300',
-                { 'text-black': path === '/starships' }
+                { 'text-black': path === '/heroes' }
               )}
             >
               Starships

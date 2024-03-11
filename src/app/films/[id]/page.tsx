@@ -16,7 +16,7 @@ export default function Hero({ params }: any) {
 
   useEffect(() => {
     fetchFilm();
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return film ? <FilmComponent film={film} /> : null;
 }
