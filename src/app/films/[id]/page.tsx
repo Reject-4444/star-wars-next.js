@@ -1,22 +1,15 @@
-'use client';
-import { FilmComponent } from '@/app/components/FilmComponent';
-import { useFetching } from '@/app/hooks/useFetching';
-import { getFilm, getHero } from '@/services/getInfo';
-import { Film, Hero } from '@/types/types';
-import { useEffect, useState } from 'react';
+import { FilmComponent } from '@/components/FilmComponent';
+import { getFilm } from '@/services/getInfo';
+import { notFound } from 'next/navigation';
 
-export default function Hero({ params }: any) {
-  const [film, setFilm] = useState<Film | null>(null);
+export default async function Hero({ params }: any) {
   const { id } = params;
 
-  const [fetchFilm, isLoadingFilm, isErrorFilm] = useFetching(async () => {
-    const response = await getFilm(id);
-    setFilm(response);
-  });
+  const film = await getFilm(id);
 
-  useEffect(() => {
-    fetchFilm();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  if (!film) {
+    notFound();
+  }
 
   return film ? <FilmComponent film={film} /> : null;
 }

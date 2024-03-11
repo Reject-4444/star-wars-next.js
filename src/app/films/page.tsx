@@ -1,35 +1,23 @@
-'use client';
-import { getFilms, getHeroes } from '@/services/getInfo';
-import { Film, Hero } from '@/types/types';
-import { useEffect, useState } from 'react';
-import { useFetching } from '../hooks/useFetching';
-import { FilmLink } from '../components/FilmLink';
+import { getFilms } from '@/services/getInfo';
+import { Film } from '@/types/types';
+import { FilmLink } from '../../components/FilmLink';
+import { notFound } from 'next/navigation';
 
-export default function Films() {
-  const [films, setFilms] = useState<Film[]>([]);
+export default async function Films() {
+  const films = await getFilms();
 
-  const [fetchFilms, isLoadingFilms, isErrorFilms] = useFetching(async () => {
-    const response = await getFilms();
-    setFilms(response);
-  });
-
-  useEffect(() => {
-    fetchFilms();
-  }, []) // eslint-disable-line react-hooks/exhaustive-deps
+  if (!films) {
+    notFound();
+  }
 
   return (
     <>
-      <div>
-        <h1 className='text-center text-4xl my-10'>Films</h1>
-        <div>
-          {films.map((film: Film) => (
-            <FilmLink
-              key={film.episode_id}
-              film={film}
-            />
-          ))}
-        </div>
-      </div>
+      {films.map((film: Film) => (
+        <FilmLink
+          key={film.episode_id}
+          film={film}
+        />
+      ))}
     </>
   );
 }

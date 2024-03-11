@@ -1,10 +1,10 @@
 'use client';
-import { getHeroes, getStarships } from '@/services/getInfo';
-import { Hero, Starship } from '@/types/types';
+import { getStarships } from '@/services/getInfo';
+import { Starship } from '@/types/types';
 import { useEffect, useState } from 'react';
-import { useFetching } from '../hooks/useFetching';
-import { Pagination } from '../components/Pagination';
-import { StarshipLink } from '../components/StarshipLink';
+import { useFetching } from '../../hooks/useFetching';
+import { Pagination } from '../../components/Pagination';
+import { StarshipLink } from '../../components/StarshipLink';
 
 export default function Starships() {
   const [starships, setStarships] = useState([]);
@@ -43,7 +43,6 @@ export default function Starships() {
 
   return (
     <>
-      <h1 className='text-center text-4xl my-10'>Starships</h1>
       {!isErrorStarships && (
         <div className='h-456'>
           {starships.map((starship: Starship) => (

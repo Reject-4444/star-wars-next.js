@@ -1,22 +1,15 @@
-'use client';
-import { StarshipComponent } from '@/app/components/StarshipComponent';
-import { useFetching } from '@/app/hooks/useFetching';
+import { StarshipComponent } from '@/components/StarshipComponent';
 import { getStarship } from '@/services/getInfo';
-import { Hero, Starship } from '@/types/types';
-import { useEffect, useState } from 'react';
+import { Starship } from '@/types/types';
+import { notFound } from 'next/navigation';
 
-export default function Starship({ params }: any) {
-  const [starship, setHero] = useState<Starship | null>(null);
+export default async function Starship({ params }: any) {
   const { id } = params;
+  const starship = await getStarship(id);
 
-  const [fetchStarship, isLoadingStarship, isErrorStarship] = useFetching(async () => {
-    const response = await getStarship(id);
-    setHero(response);
-  });
-
-  useEffect(() => {
-    fetchStarship();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  if (!starship) {
+    notFound();
+  }
 
   return starship ? <StarshipComponent starship={starship} /> : null;
 }

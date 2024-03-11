@@ -1,22 +1,16 @@
-'use client';
-import { HeroComponent } from '@/app/components/HeroComponent';
-import { useFetching } from '@/app/hooks/useFetching';
+import { HeroComponent } from '@/components/HeroComponent';
 import { getHero } from '@/services/getInfo';
 import { Hero } from '@/types/types';
-import { useEffect, useState } from 'react';
+import { notFound } from 'next/navigation';
 
-export default function Hero({ params }: any) {
-  const [hero, setHero] = useState<Hero | null>(null);
+export default async function Hero({ params }: any) {
   const { id } = params;
+  const hero = await getHero(id);
 
-  const [fetchHero, isLoadingHero, isErrorHero] = useFetching(async () => {
-    const response = await getHero(id);
-    setHero(response);
-  });
+  if (!hero) {
+    notFound();
+  }
 
-  useEffect(() => {
-    fetchHero();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return hero ? <HeroComponent hero={hero} /> : null;
 }

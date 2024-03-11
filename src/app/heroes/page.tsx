@@ -2,9 +2,9 @@
 import { getHeroes } from '@/services/getInfo';
 import { Hero } from '@/types/types';
 import { useEffect, useState } from 'react';
-import { useFetching } from '../hooks/useFetching';
-import { HeroLink } from '../components/HeroLink';
-import { Pagination } from '../components/Pagination';
+import { useFetching } from '../../hooks/useFetching';
+import { HeroLink } from '../../components/HeroLink';
+import { Pagination } from '../../components/Pagination';
 
 export default function Heroes() {
   const [heroes, setHeroes] = useState([]);
@@ -43,7 +43,6 @@ export default function Heroes() {
 
   return (
     <>
-      <h1 className='text-center text-4xl my-10'>Heroes</h1>
       {!isErrorHeroes && (
         <div className='h-456'>
           {heroes.map((hero: Hero) => (
