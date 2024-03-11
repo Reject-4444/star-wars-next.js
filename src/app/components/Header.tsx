@@ -42,6 +42,17 @@ export const Header = () => {
               Films
             </Link>
           </li>
+          <li>
+            <Link
+              href='/starships'
+              className={cn(
+                'block text-white hover:scale-110 transition-transform duration-300',
+                { 'text-black': path === '/starships' }
+              )}
+            >
+              Starships
+            </Link>
+          </li>
         </ul>
       </nav>
     </header>

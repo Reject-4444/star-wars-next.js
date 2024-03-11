@@ -16,7 +16,7 @@ export default function Hero({ params }: any) {
 
   useEffect(() => {
     fetchHero();
-  });
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return hero ? <HeroComponent hero={hero} /> : null;
 }
