@@ -12,6 +12,7 @@ export default async function Films() {
 
   return (
     <div>
+      <h1 className='text-center text-4xl my-10'>Films</h1>
       {films.map((film: Film) => (
         <FilmLink
           key={film.episode_id}

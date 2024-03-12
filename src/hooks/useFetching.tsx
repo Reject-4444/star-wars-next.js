@@ -1,11 +1,11 @@
 import { useState } from 'react';
 
 type CallbackType = () => Promise<void>;
-type FetchingReturnType = [() => Promise<void>, boolean, string];
+type FetchingReturnType = [() => Promise<void>, boolean, Error | null];
 
 export const useFetching = (callback: CallbackType): FetchingReturnType => {
   const [isLoading, setIsLoading] = useState(false);
-  const [isError, setIsError] = useState('');
+  const [isError, setIsError] = useState<Error | null>(null);
 
   const fetching = async () => {
     try {
@@ -13,9 +13,9 @@ export const useFetching = (callback: CallbackType): FetchingReturnType => {
       await callback();
     } catch (e) {
       if (e instanceof Error) {
-        setIsError(`${e.name} ${e.message}`);
+        setIsError(new Error(`${e.name} ${e.message}`));
       } else {
-        setIsError('An unknown error occurred.');
+        setIsError(new Error('An unknown error occurred.'));
       }
     } finally {
       setIsLoading(false);

@@ -10,7 +10,6 @@ export default function FilmsLayout({ children }: { children: ReactNode }) {
   return (
     <>
       <div>
-        <h1 className='text-center text-4xl my-10'>Films</h1>
         {children}
       </div>
     </>

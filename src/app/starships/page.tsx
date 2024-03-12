@@ -1,7 +1,7 @@
 'use client';
 import { getStarships } from '@/services/getInfo';
 import { Starship } from '@/types/types';
-import { useEffect, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { useFetching } from '../../hooks/useFetching';
 import { Pagination } from '../../components/Pagination';
 import { StarshipLink } from '../../components/StarshipLink';
@@ -46,14 +46,17 @@ export default function Starships() {
     <>
       {!isErrorStarships && isLoadingStarships && <Loader />}
       {!isErrorStarships && !isLoadingStarships && (
-        <div className='h-456'>
-          {starships.map((starship: Starship) => (
-            <StarshipLink
-              key={starship.url}
-              starship={starship}
-            />
-          ))}
-        </div>
+        <Fragment>
+          <h1 className='text-center text-4xl my-10'>Starships</h1>
+          <div className='h-456'>
+            {starships.map((starship: Starship) => (
+              <StarshipLink
+                key={starship.url}
+                starship={starship}
+              />
+            ))}
+          </div>
+        </Fragment>
       )}
       <Pagination
         handlePagePrevClick={handlePagePrevClick}

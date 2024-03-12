@@ -9,7 +9,6 @@ export const metadata: Metadata = {
 export default function HeroesLayout({ children }: { children: ReactNode }) {
   return (
     <>
-      <h1 className='text-center text-4xl my-10'>Heroes</h1>
       {children}
     </>
   );

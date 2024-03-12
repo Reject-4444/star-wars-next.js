@@ -1,11 +1,12 @@
 'use client';
 import { getHeroes } from '@/services/getInfo';
 import { Hero } from '@/types/types';
-import { useEffect, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { useFetching } from '../../hooks/useFetching';
 import { HeroLink } from '../../components/HeroLink';
 import { Pagination } from '../../components/Pagination';
 import { Loader } from '@/components/Loader';
+import Error from '../error';
 
 export default function Heroes() {
   const [heroes, setHeroes] = useState([]);
@@ -43,17 +44,26 @@ export default function Heroes() {
   };
 
   return (
-    <>
+    <Fragment>
+      {!isLoadingHeroes && !!isErrorHeroes && (
+        <Error
+          error={isErrorHeroes}
+          reset={fetchHeroes}
+        />
+      )}
       {isLoadingHeroes && !isErrorHeroes && <Loader />}
       {!isErrorHeroes && !isLoadingHeroes && (
-        <div className='h-456'>
-          {heroes.map((hero: Hero) => (
-            <HeroLink
-              key={hero.url}
-              hero={hero}
-            />
-          ))}
-        </div>
+        <Fragment>
+          <h1 className='text-center text-4xl my-10'>Heroes</h1>
+          <div className='h-456'>
+            {heroes.map((hero: Hero) => (
+              <HeroLink
+                key={hero.url}
+                hero={hero}
+              />
+            ))}
+          </div>
+        </Fragment>
       )}
       <Pagination
         handlePagePrevClick={handlePagePrevClick}
@@ -62,6 +72,6 @@ export default function Heroes() {
         currentPage={currentPage}
         pageCount={pageCount}
       />
-    </>
+    </Fragment>
   );
 }
