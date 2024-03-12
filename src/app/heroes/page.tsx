@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { useFetching } from '../../hooks/useFetching';
 import { HeroLink } from '../../components/HeroLink';
 import { Pagination } from '../../components/Pagination';
+import { Loader } from '@/components/Loader';
 
 export default function Heroes() {
   const [heroes, setHeroes] = useState([]);
@@ -43,7 +44,8 @@ export default function Heroes() {
 
   return (
     <>
-      {!isErrorHeroes && (
+      {isLoadingHeroes && !isErrorHeroes && <Loader />}
+      {!isErrorHeroes && !isLoadingHeroes && (
         <div className='h-456'>
           {heroes.map((hero: Hero) => (
             <HeroLink

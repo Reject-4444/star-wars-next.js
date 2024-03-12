@@ -11,13 +11,13 @@ export default async function Films() {
   }
 
   return (
-    <>
+    <div>
       {films.map((film: Film) => (
         <FilmLink
           key={film.episode_id}
           film={film}
         />
       ))}
-    </>
+    </div>
   );
 }

@@ -11,5 +11,5 @@ export default async function Hero({ params }: any) {
     notFound();
   }
 
-  return film ? <FilmComponent film={film} /> : null;
+  return <>{film ? <FilmComponent film={film} /> : null}</>;
 }

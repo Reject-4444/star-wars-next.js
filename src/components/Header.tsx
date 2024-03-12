@@ -5,6 +5,7 @@ import cn from 'classnames';
 
 export const Header = () => {
   const path = usePathname();
+
   return (
     <header className='bg-purple-800 py-4'>
       <nav className='flex justify-center'>
@@ -13,7 +14,7 @@ export const Header = () => {
             <Link
               href='/'
               className={cn(
-                'block text-white hover:scale-110 transition-transform duration-300',
+                'block text-xl text-white hover:scale-110 transition-transform duration-300',
                 { 'text-black': path === '/' }
               )}
             >
@@ -24,8 +25,8 @@ export const Header = () => {
             <Link
               href='/heroes'
               className={cn(
-                'block text-white hover:scale-110 transition-transform duration-300',
-                { 'text-black': path === '/heroes' }
+                'block text-xl text-white hover:scale-110 transition-transform duration-300',
+                { 'text-black': path.includes('/heroes') }
               )}
             >
               Heroes
@@ -35,8 +36,8 @@ export const Header = () => {
             <Link
               href='/films'
               className={cn(
-                'block text-white hover:scale-110 transition-transform duration-300',
-                { 'text-black': path === '/heroes' }
+                'block text-xl text-white hover:scale-110 transition-transform duration-300',
+                { 'text-black': path.includes('/films') }
               )}
             >
               Films
@@ -46,8 +47,8 @@ export const Header = () => {
             <Link
               href='/starships'
               className={cn(
-                'block text-white hover:scale-110 transition-transform duration-300',
-                { 'text-black': path === '/heroes' }
+                'block text-xl text-white hover:scale-110 transition-transform duration-300',
+                { 'text-black': path.includes('/starships') }
               )}
             >
               Starships

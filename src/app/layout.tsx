@@ -9,6 +9,7 @@ export const metadata: Metadata = {
   title: 'Star Wars',
   description: 'Website for funs Star Wars',
 };
+
 export default function RootLayout({
   children,
 }: Readonly<{

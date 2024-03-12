@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { useFetching } from '../../hooks/useFetching';
 import { Pagination } from '../../components/Pagination';
 import { StarshipLink } from '../../components/StarshipLink';
+import { Loader } from '@/components/Loader';
 
 export default function Starships() {
   const [starships, setStarships] = useState([]);
@@ -43,7 +44,8 @@ export default function Starships() {
 
   return (
     <>
-      {!isErrorStarships && (
+      {!isErrorStarships && isLoadingStarships && <Loader />}
+      {!isErrorStarships && !isLoadingStarships && (
         <div className='h-456'>
           {starships.map((starship: Starship) => (
             <StarshipLink
