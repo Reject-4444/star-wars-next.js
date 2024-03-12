@@ -1,70 +1,43 @@
-'use client';
 import { getStarships } from '@/services/getInfo';
-import { Starship } from '@/types/types';
-import { Fragment, useEffect, useState } from 'react';
-import { useFetching } from '../../hooks/useFetching';
-import { Pagination } from '../../components/Pagination';
-import { StarshipLink } from '../../components/StarshipLink';
-import { Loader } from '@/components/Loader';
+import { Hero } from '@/types/types';
+import { Fragment, Suspense } from 'react';
+import { HeroLink } from '@/components/HeroLink';
+import { Pagination } from '@/components/Pagination';
+import { notFound } from 'next/navigation';
 
-export default function Starships() {
-  const [starships, setStarships] = useState([]);
-  const [pageCount, setPageCount] = useState(0);
-  const [currentPage, setCurrentPage] = useState(1);
+const INITIAL_PAGE = 1;
 
-  const [fetchStarships, isLoadingStarships, isErrorStarships] = useFetching(
-    async () => {
-      const response = await getStarships(currentPage.toString());
-      setStarships(response.results);
-      const count = response.count;
-      const amountOfPages = Math.ceil(count / 10);
-      setPageCount(amountOfPages);
-    }
-  );
+export default async function Starships({ searchParams }: any) {
+  console.log(searchParams);
 
-  useEffect(() => {
-    fetchStarships();
-  }, [currentPage]); // eslint-disable-line react-hooks/exhaustive-deps
+  const currentPage = Number(searchParams.page) || INITIAL_PAGE;
 
-  const handlePageClick = (page: number) => {
-    setCurrentPage(page);
-  };
+  const data = await getStarships(currentPage.toString());
 
-  const handlePagePrevClick = () => {
-    if (currentPage > 1) {
-      setCurrentPage((prev) => prev - 1);
-    }
-  };
+  if (!data) {
+    notFound();
+  }
 
-  const handlePageNextClick = () => {
-    if (currentPage < pageCount) {
-      setCurrentPage((prev) => prev + 1);
-    }
-  };
+  const { count, results: heroes } = data;
+  const pageCount = Math.ceil(count / 10);
 
   return (
-    <>
-      {!isErrorStarships && isLoadingStarships && <Loader />}
-      {!isErrorStarships && !isLoadingStarships && (
-        <Fragment>
-          <h1 className='text-center text-4xl my-10'>Starships</h1>
-          <div className='h-456'>
-            {starships.map((starship: Starship) => (
-              <StarshipLink
-                key={starship.url}
-                starship={starship}
-              />
-            ))}
-          </div>
-        </Fragment>
-      )}
+    <Fragment>
+      <h1 className='text-center text-4xl my-10'>Starships</h1>
+      {
+        <div className='h-456'>
+          {heroes.map((hero: Hero) => (
+            <HeroLink
+              key={hero.url}
+              hero={hero}
+            />
+          ))}
+        </div>
+      }
       <Pagination
-        handlePagePrevClick={handlePagePrevClick}
-        handlePageNextClick={handlePageNextClick}
-        handlePageClick={handlePageClick}
         currentPage={currentPage}
         pageCount={pageCount}
       />
-    </>
+    </Fragment>
   );
 }
